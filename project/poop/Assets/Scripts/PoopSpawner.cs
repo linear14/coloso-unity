@@ -17,15 +17,15 @@ public class PoopSpawner : MonoBehaviour
     }
 
     private void StartSpawning() {
-        StartCoroutine(SpawnPoopRoutine());
+        StartCoroutine("SpawnPoopRoutine");
     }
 
-    private void StopSpawning() {
-        StopCoroutine(SpawnPoopRoutine());
+    public void StopSpawning() {
+        StopCoroutine("SpawnPoopRoutine");
     }
 
     IEnumerator SpawnPoopRoutine() {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         while(true) {
             SpawnPoop();
             yield return new WaitForSeconds(spawnInterval);
@@ -46,5 +46,15 @@ public class PoopSpawner : MonoBehaviour
         // 새로운 게임 오브젝트를 만드는 함수 Instantiate
         // 별도 회전을 안넣을거면 3번째 파라미터 값으로 Quaternion.identity를 넣어줌
         Instantiate(poops[randomIndex], position, Quaternion.identity);
+    }
+
+    public bool IncreaseSpeed() {
+        if(spawnInterval <= 0.2f) {
+            spawnInterval = 0.2f;
+            return false;
+        }
+
+        spawnInterval -= 0.1f;
+        return true;
     }
 }

@@ -19,6 +19,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // 게임오버..
+        if(GameManager.instance.isGameOver) {
+            animator.SetBool("isRunning", false);
+            return;
+        }
+
         // 키보드 입력을 받아서 이동
         // 왼쪽 방향키를 누르면 왼쪽으로 이동
         // 오른쪽 방향키를 누르면 오른쪽으로 이동
@@ -66,5 +72,9 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(newX, currentScale.y, currentScale.z);
         }
 
+    }
+
+    public void CollideWithPoop() {
+        GetComponent<SpriteRenderer>().color = new Color(0.77f, 0.52f, 0f);
     }
 }
